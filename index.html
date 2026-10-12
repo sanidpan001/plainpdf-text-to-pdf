@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlainPDF — Text to PDF Converter: Turn Plain Text into a Clean PDF Free</title>
+<meta name="description" content="Free text-to-PDF converter. Paste or upload plain text and get a beautifully paginated PDF with your choice of font, size, margins and an optional header line.">
+<link rel="canonical" href="https://plainpdf.fixoraa.tech/">
+<meta property="og:title" content="PlainPDF — Text to PDF Converter: Turn Plain Text into a Clean PDF Free">
+<meta property="og:description" content="Free text-to-PDF converter. Paste or upload plain text and get a beautifully paginated PDF with your choice of font, size, margins and an optional header line.">
+<meta property="og:url" content="https://plainpdf.fixoraa.tech/">
+<meta property="og:type" content="website">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';</script>
+<style>
+:root{--pri:#44403C;--acc:#2563EB;--bgc:#FAFAF9}
+body{background:var(--bgc);font-family:'Segoe UI',system-ui,sans-serif}
+.pri{background:var(--pri)} .prit{color:var(--pri)}
+.btn{background:var(--pri);color:#fff;padding:.6rem 1.2rem;border-radius:.6rem;font-weight:600;cursor:pointer;border:none}
+.btn:hover{opacity:.9} .btn2{background:var(--acc);color:#111;padding:.6rem 1.2rem;border-radius:.6rem;font-weight:600;cursor:pointer;border:none}
+.btn:disabled,.btn2:disabled{opacity:.45;cursor:not-allowed}
+input,select,textarea{border:1.5px solid #cbd5e1;border-radius:.55rem;padding:.55rem .7rem;width:100%;background:#fff;color:#0f172a}
+input[type=file]{padding:.45rem .6rem} input[type=range]{padding:0} input[type=checkbox],input[type=radio]{width:auto}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--pri);border-color:transparent}
+label{font-size:.83rem;font-weight:600;display:block;margin-bottom:.3rem}
+.card{background:#fff;border-radius:1rem;box-shadow:0 8px 30px rgba(15,23,42,.08);padding:1.4rem}
+article p{margin:.7rem 0;line-height:1.75;color:#334155}
+article h2{font-size:1.45rem;font-weight:800;margin:1.6rem 0 .4rem;color:#0f172a}
+.faq{background:#fff;border-radius:.7rem;padding:.9rem 1.1rem;margin:.55rem 0;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+.faq summary{font-weight:700;cursor:pointer}
+table.dt{width:100%;border-collapse:collapse} table.dt th,table.dt td{border:1px solid #e2e8f0;padding:.45rem .6rem;text-align:left;font-size:.9rem}
+table.dt th{background:#f1f5f9}
+.drop{border:2px dashed #94a3b8;border-radius:.8rem;padding:1.1rem;text-align:center;background:#f8fafc}
+canvas.prev{max-width:100%;border:1px solid #e2e8f0;border-radius:.5rem;background:#fff}
+
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "PlainPDF", "url": "https://plainpdf.fixoraa.tech/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free text-to-PDF converter. Paste or upload plain text and get a beautifully paginated PDF with your choice of font, size, margins and an optional header line."}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How does PlainPDF handle paragraphs?", "acceptedAnswer": {"@type": "Answer", "text": "Blank lines start new paragraphs with comfortable spacing; single line breaks are kept as line breaks, so verse, addresses and list-like text keep their shape."}}, {"@type": "Question", "name": "Which font should I choose?", "acceptedAnswer": {"@type": "Answer", "text": "Times for formal prose and manuscripts, Helvetica for clean modern documents and reports, Courier for screenplays, code-flavoured text or exact character alignment."}}, {"@type": "Question", "name": "Can I add a header and page numbers?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2014 an optional header line prints in small grey type at the top of every page, and page numbers ('3 / 12') can be centred at the foot. Both are set before building."}}, {"@type": "Question", "name": "Is the output text selectable?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. PlainPDF typesets real text with embedded standard fonts \u2014 the PDF is searchable, selectable and tiny, unlike image-based conversions."}}, {"@type": "Question", "name": "Can I load a .txt file instead of pasting?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2014 the Load button reads a .txt file straight into the editor, with word and character counts shown, ready to typeset."}}, {"@type": "Question", "name": "Is my text uploaded anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "Never. Typesetting happens entirely in your browser; your words exist only in your tab and in the PDF you download."}}]}</script>
+</head>
+<body id="top">
+<header class="sticky top-0 z-40 shadow-md" style="background:#1C1917">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-3 flex items-center justify-between">
+    <a href="#top" class="text-xl font-extrabold tracking-tight" style="color:#FAFAF9">📄 PlainPDF</a>
+    <nav class="flex gap-5 text-sm font-semibold" style="color:#FAFAF9">
+      <a href="#top" class="hover:underline">Home</a>
+      <a href="https://fixoraa.tech" class="hover:underline">More Tools</a>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="mx-auto max-w-6xl px-4 sm:px-6 py-8">
+  <div class="text-center mb-6">
+    <h1 class="text-3xl sm:text-4xl font-extrabold" style="color:#0f172a">Text to PDF Converter — Clean, Paginated PDFs</h1>
+    <p class="mt-2 text-slate-600 max-w-2xl mx-auto">You have words in a .txt file, a notes app, or your clipboard — and the world wants a PDF. PlainPDF typesets your text properly: wrapped, margined, paginated, with the font and size you choose.</p>
+    <span class="inline-block mt-3 px-3 py-1 rounded-full text-xs font-bold text-white pri">✓ Unlimited Free Usage — No Signup, No Watermark</span>
+    <p class="mt-2 text-xs text-slate-500">🔒 100% private: your file is processed entirely in your browser and never uploaded to any server.</p>
+  </div>
+  <div class="grid md:grid-cols-5 gap-6">
+  <div class="card md:col-span-3">
+    <label>Your text</label>
+    <textarea id="txt" rows="14" placeholder="Paste or type your text here. Blank lines start new paragraphs…">The quick brown fox jumps over the lazy dog.
+
+PlainPDF turns plain text like this into a clean, print-ready PDF. Choose a font, a size and margins on the right, add an optional header line, and download a document that paginates itself.</textarea>
+    <div class="flex gap-2 mt-2"><label class="btn2" style="cursor:pointer">📂 Load a .txt file<input id="tfile" type="file" accept=".txt,text/plain" style="display:none"></label><span id="wc" class="text-sm text-slate-500 self-center"></span></div>
+  </div>
+  <div class="card md:col-span-2 space-y-3">
+    <div class="grid grid-cols-2 gap-3"><div><label>Font</label><select id="font"><option value="TimesRoman">Times (serif)</option><option value="Helvetica">Helvetica (sans)</option><option value="Courier">Courier (mono)</option></select></div>
+    <div><label>Font size</label><input id="fsize" type="number" value="12"></div></div>
+    <div class="grid grid-cols-2 gap-3"><div><label>Page</label><select id="psize"><option value="A4">A4</option><option value="Letter">Letter</option></select></div><div><label>Margin (pt)</label><input id="marg" type="number" value="56"></div></div>
+    <div><label>Header line (optional — printed on every page)</label><input id="hdr" type="text" placeholder="e.g. Meeting notes — 12 Oct"></div>
+    <div><label><input type="checkbox" id="pnum" checked> Page numbers at the bottom</label></div>
+    <button class="btn w-full" id="go" onclick="run()">Build PDF</button>
+    <button class="btn2 w-full" id="dl" style="display:none">⬇ Download PDF</button>
+    <p id="status" class="text-sm font-semibold"></p>
+  </div></div>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="464498"></script>
+    </div>
+  </div>
+</div>
+<section class="mx-auto max-w-4xl px-4 sm:px-6 pb-6">
+  <article>
+  <h2>Plain text is eternal; delivery formats come and go</h2>
+<p>Every writer has a file like this: notes in a .txt, a draft in a bare editor, minutes in a notes app, a manuscript exported from a distraction-free writing tool. Plain text is the most durable format ever invented — readable on every machine since the seventies — but the world's inboxes, portals and printers ask for PDF. PlainPDF is the deliberate, typeset bridge between the two: not a screenshot of your text, not a browser print dialog's improvisation, but a properly paginated document whose margins, font and rhythm you chose.</p>
+<p>The difference shows in the details print dialogs get wrong. Text is wrapped by measuring real font metrics, so lines break cleanly at your margins rather than at a window's width. Paragraphs breathe with consistent spacing. An optional header line repeats on every page like a proper document, and page numbers sit centred at the foot — the two touches that separate a document from a dump.</p>
+<h2>Choosing a font like it matters — because it does</h2>
+<p>Three classic faces cover nearly every honest job. Times gives prose the bookish authority of print: essays, manuscripts, formal letters and anything that will be read at length on paper. Helvetica is the neutral modern voice — reports, CV-adjacent documents, instructions — clean at every size and invisible in the best way. Courier is the specialist: screenplays and code-adjacent text by tradition, and anywhere character alignment must be exact, since every letter takes the same width.</p>
+<p>Size and margin are a pair. Twelve-point Times at comfortable margins is the manuscript standard for a reason — editors' eyes are calibrated to it. Ten to eleven points suit dense reference text on A4; fourteen and up serve large-print needs and presentation handouts. Wider margins rest the eye and leave room for annotation; narrower margins pack a long document into fewer sheets. PlainPDF exposes exactly these levers and no clutter beyond them.</p>
+<h2>How to turn text into a PDF, step by step</h2>
+<p>Paste your text, or load a .txt file directly — the word and character counts confirm what arrived. Blank lines become paragraph breaks; single line breaks are preserved as line breaks, which keeps verse, addresses and lists shaped as you wrote them. Set font, size, page and margin, add a header if the document will live in a binder or a shared folder — a title or a date in small grey type at the top of every page is quietly invaluable there.</p>
+<p>Tick page numbers for anything longer than two pages, press Build, and download. The result is a true text PDF: selectable, searchable, tiny in file size, and identical on every machine — the entire point of the format. If the layout displeases, adjust a lever and rebuild; your text is untouched in the box, and iteration costs seconds because the typesetting happens on your own device.</p>
+<h2>The jobs hiding in plain text</h2>
+<p>Writers submit manuscripts and contest entries formatted to a house spec from raw drafts. Administrators turn meeting minutes and circulars into distributable documents. Lawyers' clerks, teachers and trainers convert plain-text originals — often generated by other software, dictation tools or AI assistants — into handouts and filings. Developers generate logs, readmes and documentation as PDFs for clients who will never open a markdown file. In each case the source is humble text and the destination demands presentable PDF; the gap between them is pure typesetting.</p>
+<p>There is a longer game too: PDF is an archiving format. Converting the plain-text records of a project, a correspondence or a journal into paginated PDFs with headers and page numbers creates artefacts that read intentionally decades later, when the notes app is gone and the .txt's context with it. A header line carrying a title and date is a gift to whoever opens the file in twenty years — quite possibly you.</p>
+<h2>What plain text cannot express — said plainly</h2>
+<p>Plain text carries no bold, no italics, no headings, no tables — and PlainPDF does not pretend otherwise. Emphasis you need must live in the prose itself, or the document belongs in a richer editor first. What the format does carry — words, in order, with paragraph and line structure — is preserved completely and typeset with care. For the enormous class of documents that are exactly that, the honesty is a feature: no surprise styles, no formatting archaeology, no wondering what a pasted block dragged in with it.</p>
+<p>Unicode deserves a footnote: the built-in PDF fonts cover Latin scripts handsomely, including accents, while characters far outside those ranges may not render in the standard faces. For English and European-language text — the overwhelming majority of plain-text files — output is flawless. Check page one of your download if your text mixes scripts, as you would with any typesetting you care about.</p>
+<h2>Privacy: your words are the whole payload</h2>
+<p>Notes, drafts and minutes are unpublished by definition — often the most candid text a person produces. PlainPDF typesets them inside your browser tab; the text exists only in the page you are looking at and in the file you download. There is no upload, no server-side document history, no account holding your drafts. Close the tab and the tool forgets everything, because it never knew anything anywhere else.</p>
+<p>That is the right architecture for a converter whose input is, literally, your words. It also makes the tool dependable at the worst connectivity moments — once loaded, it typesets happily offline, on a train, in a cabin, at a client's site — turning text into presentable documents wherever the words happen to be.</p>
+<h2>Typesetting habits that make text feel published</h2>
+<p>Let paragraphs do the formatting: one idea per paragraph, a blank line between them, and no manual indentation — the consistent rhythm reads as professional without a single style command. Keep line length humane by respecting margins; the classic measure of forty-five to seventy-five characters exists because eyes lose their place on longer journeys back to the margin. If your text contains lists, give each item its own line and a simple marker — the preserved line breaks will hold the shape. Add the header once the document has a name worth repeating: a title and a date turn pages into a document. Finally, proofread the PDF, not the text box — line breaks move meaning, and the page is where your reader will meet every orphan and awkward break.</p>
+  <h2>Frequently Asked Questions</h2>
+  <details class="faq"><summary>How does PlainPDF handle paragraphs?</summary><p>Blank lines start new paragraphs with comfortable spacing; single line breaks are kept as line breaks, so verse, addresses and list-like text keep their shape.</p></details>
+<details class="faq"><summary>Which font should I choose?</summary><p>Times for formal prose and manuscripts, Helvetica for clean modern documents and reports, Courier for screenplays, code-flavoured text or exact character alignment.</p></details>
+<details class="faq"><summary>Can I add a header and page numbers?</summary><p>Yes — an optional header line prints in small grey type at the top of every page, and page numbers ('3 / 12') can be centred at the foot. Both are set before building.</p></details>
+<details class="faq"><summary>Is the output text selectable?</summary><p>Yes. PlainPDF typesets real text with embedded standard fonts — the PDF is searchable, selectable and tiny, unlike image-based conversions.</p></details>
+<details class="faq"><summary>Can I load a .txt file instead of pasting?</summary><p>Yes — the Load button reads a .txt file straight into the editor, with word and character counts shown, ready to typeset.</p></details>
+<details class="faq"><summary>Is my text uploaded anywhere?</summary><p>Never. Typesetting happens entirely in your browser; your words exist only in your tab and in the PDF you download.</p></details>
+  </article>
+</section>
+<footer class="mt-6 py-8" style="background:#1C1917;color:#FAFAF9">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 text-center text-sm">
+    <p class="font-bold text-base">PlainPDF</p>
+    <p class="opacity-80 mt-1">Free text-to-PDF converter. Paste or upload plain text and get a beautifully paginated PDF with your choice of font, size, margins and an optional header line.</p>
+    <p class="mt-2"><a href="#top" class="underline">Home</a> · <a href="https://fixoraa.tech" class="underline">More Tools</a></p>
+    <p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+  </div>
+</footer>
+<script id="lib-plainpdf">
+
+function wrapLines(text, font, size, maxWidth){ var words=String(text).split(/\s+/).filter(Boolean); var lines=[]; var cur=''; for(var i=0;i<words.length;i++){ var w=words[i]; var test=cur?cur+' '+w:w; if(font.widthOfTextAtSize(test,size)>maxWidth && cur){ lines.push(cur); cur=w; } else cur=test; } if(cur) lines.push(cur); return lines.length?lines:['']; }
+if (typeof module!=="undefined") module.exports={wrapLines:wrapLines};
+
+</script>
+<script>
+
+const $=id=>document.getElementById(id);
+function fmtBytes(b){if(b===0)return '0 B';const k=1024,s=['B','KB','MB','GB'];const i=Math.floor(Math.log(b)/Math.log(k));return (b/Math.pow(k,i)).toFixed(i?1:0)+' '+s[i];}
+function setStatus(m,ok){const el=$('status');if(!el)return;el.textContent=m;el.style.color=ok===false?'#dc2626':'inherit';}
+function download(bytes,name,type){const blob=bytes instanceof Blob?bytes:new Blob([bytes],{type:type||'application/pdf'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},800);}
+async function readFile(input){const f=input.files&&input.files[0];if(!f)throw new Error('Please choose a PDF file first.');return {file:f,buf:await f.arrayBuffer()};}
+function showDl(id,bytes,name){const b=$(id);b.style.display='inline-block';b.onclick=()=>download(bytes,name);}
+
+
+$('tfile').addEventListener('change',async e=>{ const f=e.target.files[0]; if(f){ $('txt').value=await f.text(); updWc(); } });
+function updWc(){ const t=$('txt').value; $('wc').textContent=(t.trim()?t.trim().split(/\s+/).length:0).toLocaleString()+' words · '+t.length.toLocaleString()+' characters'; }
+$('txt').addEventListener('input',updWc); updWc();
+async function run(){
+  const btn=$('go'); btn.disabled=true;
+  try{
+    const text=$('txt').value; if(!text.trim()) throw new Error('Please enter or load some text first.');
+    const doc=await PDFLib.PDFDocument.create();
+    const fname=$('font').value; const font=await doc.embedFont(PDFLib.StandardFonts[fname==='TimesRoman'?'TimesRoman':fname]);
+    const size=Math.max(8,parseFloat($('fsize').value)||12);
+    const dims=$('psize').value==='A4'?[595.28,841.89]:[612,792];
+    const [W,H]=dims; const m=parseFloat($('marg').value)||56;
+    const lh=size*1.45, maxW=W-m*2;
+    let page=doc.addPage([W,H]); let y=H-m-( $('hdr').value? 22:0 );
+    const newPage=()=>{ page=doc.addPage([W,H]); y=H-m-($('hdr').value?22:0); };
+    const header=()=>{ if($('hdr').value){ page.drawText($('hdr').value,{x:m,y:H-m+6,size:size-2,font:font,color:PDFLib.rgb(0.45,0.45,0.45)}); } };
+    header();
+    const paras=text.replace(/\r\n/g,'\n').split(/\n\s*\n/);
+    for(const para of paras){
+      const single=para.split('\n');
+      for(const chunk of single){
+        const lines=wrapLines(chunk,font,size,maxW);
+        for(const ln of lines){ if(y< m+lh){ newPage(); header(); } page.drawText(ln,{x:m,y:y,size:size,font:font}); y-=lh; }
+      }
+      y-=lh*0.6; if(y<m) { newPage(); header(); }
+    }
+    if($('pnum').checked){ const pages=doc.getPages(); pages.forEach((p,ix)=>{ const s=String(ix+1)+' / '+pages.length; p.drawText(s,{x:(W-font.widthOfTextAtSize(s,9))/2,y:26,size:9,font:font,color:PDFLib.rgb(0.5,0.5,0.5)}); }); }
+    const bytes=await doc.save();
+    $('rep')&&0; showDl('dl',bytes,'document.pdf');
+    setStatus('Done ✔ Built '+doc.getPageCount()+' page(s) from your text.');
+  }catch(e){ setStatus('⚠ '+(e.message||e),false); }
+  btn.disabled=false;
+}
+
+</script>
+</body>
+</html>
